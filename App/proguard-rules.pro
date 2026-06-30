@@ -1,0 +1,9 @@
+-keep class com.example.newsapp.model.** { *; }
+-keep class com.example.newsapp.database.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.google.gson.** { *; }
+-keep class retrofit2.** { *; }
+-dontwarn retrofit2.**
+-dontwarn okhttp3.**
+-dontwarn okio.**
