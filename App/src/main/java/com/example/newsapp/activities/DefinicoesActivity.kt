@@ -3,12 +3,15 @@ package com.example.newsapp.activities
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.example.newsapp.databinding.ActivityDefinicoesBinding
 import com.example.newsapp.model.Constantes
 
@@ -25,6 +28,19 @@ class DefinicoesActivity : AppCompatActivity() {
 
     private val prefs by lazy {
         getSharedPreferences(Constantes.PREFS_NOME, Context.MODE_PRIVATE)
+    }
+
+    // Pedir permissão de notificações (Android 13+)
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            Toast.makeText(this, "Permissão concedida", Toast.LENGTH_SHORT).show()
+        } else {
+            binding.checkboxNotificacoes.isChecked = false
+            prefs.edit().putBoolean(Constantes.PREFS_NOTIFICACOES, false).apply()
+            Toast.makeText(this, "Permissão negada. Não verás notificações.", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +69,9 @@ class DefinicoesActivity : AppCompatActivity() {
 
         // Checkbox notificações
         binding.checkboxNotificacoes.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                verificarPermissaoNotificacoes()
+            }
             prefs.edit().putBoolean(Constantes.PREFS_NOTIFICACOES, isChecked).apply()
             val msg = if (isChecked) "Notificações ativadas" else "Notificações desativadas"
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
@@ -110,6 +129,16 @@ class DefinicoesActivity : AppCompatActivity() {
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(1, notificacao)
+    }
+
+    private fun verificarPermissaoNotificacoes() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

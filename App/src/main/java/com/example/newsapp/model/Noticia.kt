@@ -2,6 +2,7 @@ package com.example.newsapp.model
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
@@ -13,7 +14,10 @@ import kotlinx.parcelize.Parcelize
  * @Entity    — define a tabela Room "noticias"
  */
 @Parcelize
-@Entity(tableName = "noticias")
+@Entity(
+    tableName = "noticias",
+    indices = [Index(value = ["titulo"], unique = true)]
+)
 data class Noticia(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

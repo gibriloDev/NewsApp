@@ -10,7 +10,7 @@ import com.example.newsapp.model.Noticia
  * Base de dados Room da aplicação.
  * Singleton — só existe uma instância durante a vida da app.
  */
-@Database(entities = [Noticia::class], version = 1, exportSchema = false)
+@Database(entities = [Noticia::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun noticiaDao(): NoticiaDao
@@ -25,7 +25,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "newsapp_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

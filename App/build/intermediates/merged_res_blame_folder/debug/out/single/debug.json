@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.example.newsapp-merged_res-4:/menu_menu_main.xml.flat",
+        "source": "com.example.newsapp-main-6:/menu/menu_main.xml"
+    },
+    {
+        "merged": "com.example.newsapp-merged_res-4:/layout_activity_detalhe_noticia.xml.flat",
+        "source": "com.example.newsapp-main-6:/layout/activity_detalhe_noticia.xml"
+    },
+    {
+        "merged": "com.example.newsapp-merged_res-4:/layout_activity_main.xml.flat",
+        "source": "com.example.newsapp-main-6:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.newsapp-merged_res-4:/layout_activity_adicionar_noticia.xml.flat",
+        "source": "com.example.newsapp-main-6:/layout/activity_adicionar_noticia.xml"
+    },
+    {
+        "merged": "com.example.newsapp-merged_res-4:/layout_activity_definicoes.xml.flat",
+        "source": "com.example.newsapp-main-6:/layout/activity_definicoes.xml"
+    },
+    {
+        "merged": "com.example.newsapp-merged_res-4:/layout_item_noticia.xml.flat",
+        "source": "com.example.newsapp-main-6:/layout/item_noticia.xml"
+    }
+]

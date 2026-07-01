@@ -7,7 +7,7 @@ object Constantes {
 
     // ───── API ─────
     // Regista-te em https://newsapi.org/register e substitui aqui
-    const val API_KEY = "SUA_API_KEY_AQUI"
+    const val API_KEY = "a12dcf1c3f0a4b5e81b5d6958d92b200"
 
     // ───── SharedPreferences ─────
     const val PREFS_NOME = "newsapp_prefs"

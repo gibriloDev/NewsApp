@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="azul_dark">#003c8f</color>
+    <color name="azul_primary">#1565C0</color>
+    <color name="branco">#FFFFFF</color>
+    <color name="cinzento_claro">#F5F5F5</color>
+    <color name="laranja_accent">#FF6D00</color>
+    <string name="app_name">NewsApp</string>
+    <style name="Theme.NewsApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/azul_primary</item>
+        <item name="colorPrimaryVariant">@color/azul_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/laranja_accent</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

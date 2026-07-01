@@ -19,6 +19,7 @@ import com.example.newsapp.database.AppDatabase
 import com.example.newsapp.databinding.ActivityMainBinding
 import com.example.newsapp.model.Constantes
 import com.example.newsapp.model.Noticia
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: AppDatabase
     private lateinit var adapter: NoticiaAdapter
+
+    private var observationJob: Job? = null
 
     private val prefs by lazy {
         getSharedPreferences(Constantes.PREFS_NOME, Context.MODE_PRIVATE)
@@ -98,6 +101,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val posicao = viewHolder.adapterPosition
+                if (posicao == RecyclerView.NO_POSITION) return
+
                 val noticia = adapter.obterNoticiaNaPosicao(posicao)
                 lifecycleScope.launch {
                     database.noticiaDao().eliminar(noticia)
@@ -127,7 +132,8 @@ class MainActivity : AppCompatActivity() {
      * Usa Flow do Room para atualização automática da UI.
      */
     private fun observarNoticias() {
-        lifecycleScope.launch {
+        observationJob?.cancel()
+        observationJob = lifecycleScope.launch {
             val flow = when {
                 textoPesquisa.isNotEmpty() ->
                     database.noticiaDao().pesquisar(textoPesquisa)
@@ -209,6 +215,8 @@ class MainActivity : AppCompatActivity() {
     // Recarregar lista ao voltar de outra Activity
     override fun onResume() {
         super.onResume()
+        // Atualizar o switch caso tenha sido alterado nas definições
+        binding.switchModoEscuro.isChecked = prefs.getBoolean(Constantes.PREFS_MODO_ESCURO, false)
         observarNoticias()
     }
 }
